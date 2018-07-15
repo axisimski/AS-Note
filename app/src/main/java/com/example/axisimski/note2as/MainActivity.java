@@ -50,9 +50,13 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                intent.putExtra("Position", position);
                 startActivity(intent);
             }
         });
+
+        saveList.saveList(getApplicationContext(), listOfNotes);
+        listOfNotes=loadList.loadList(getApplicationContext());
 
     }//end onCreate()
 

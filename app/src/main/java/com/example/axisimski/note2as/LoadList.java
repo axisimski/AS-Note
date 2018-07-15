@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LoadList {
 
-    public List<String> loadList(Context context){
+    public ArrayList<String> loadList(Context context){
 
         ArrayList<String> list= new ArrayList<>();
         SharedPreferences sharedPreferences=context.getApplicationContext().
