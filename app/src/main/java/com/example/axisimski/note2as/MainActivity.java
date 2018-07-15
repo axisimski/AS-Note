@@ -129,11 +129,19 @@ public class MainActivity extends AppCompatActivity {
         noteLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
          @Override
           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                Intent intent = new Intent(MainActivity.this, NoteActivity.class);
                intent.putExtra("Position", position);
                startActivity(intent);
              }
+        });
+
+
+        noteLV.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                view.setSelected(true);
+                return false;
+            }
         });
     }
 
