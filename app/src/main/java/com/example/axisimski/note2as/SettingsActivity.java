@@ -11,8 +11,7 @@ import android.widget.RadioGroup;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private SharedPreferences sp=getSharedPreferences("Settings", Context.MODE_PRIVATE);
-    private Button save_btn;
+    private SharedPreferences sp;
     private RadioButton single_rb, multi_rb;
 
     @Override
@@ -20,9 +19,10 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        save_btn=findViewById(R.id.btn_save);
+        Button save_btn = findViewById(R.id.btn_save);
         single_rb=findViewById(R.id.single_radio_btn);
         multi_rb=findViewById(R.id.multi_radio_btn);
+        sp=getSharedPreferences("Settings", Context.MODE_PRIVATE);
 
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,20 +32,15 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-
-
     private void saveSettings(){
         if(single_rb.isChecked()){
-
+            sp.edit().putBoolean("singleFile",true).apply();
         }
 
         else if(multi_rb.isChecked()){
-
+            sp.edit().putBoolean("singleFile",false).apply();
         }
 
-        else{
+    }//end saveSettings();
 
-        }
-
-    }
-}
+}//end class{}

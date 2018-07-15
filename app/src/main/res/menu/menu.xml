@@ -3,15 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-    android:id="@+id/item_add"
-    android:icon="@drawable/ic_action_add"
-    android:title="@string/add_note"
-    app:showAsAction="always" />
+        android:id="@+id/item_add"
+        android:icon="@drawable/ic_action_add"
+        android:title="@string/add_note"
+         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/item_save"
         android:icon="@drawable/ic_action_save"
         android:title="@string/save_to_text"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/item_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="@string/settings"
+        app:showAsAction="collapseActionView" />
 
 </menu>

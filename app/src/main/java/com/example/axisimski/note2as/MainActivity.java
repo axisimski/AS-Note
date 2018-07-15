@@ -1,6 +1,8 @@
 package com.example.axisimski.note2as;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private LoadList loadList=new LoadList();
     private CheckPermissions checkPermissions=new CheckPermissions();
     private SaveToTextFile saveToTextFile=new SaveToTextFile();
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         checkPermissions.checkPermissions(getApplicationContext(), MainActivity.this);
 
+        sp=getSharedPreferences("Settings", Context.MODE_PRIVATE);
         listOfNotes=loadList.loadList(getApplicationContext());
         noteLV=findViewById(R.id.note_lv);
         adapter=new ArrayAdapter<>(this,
@@ -77,12 +81,42 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                String allNotes="";
-                for(int i=0;i<listOfNotes.size();i++){
-                    allNotes=allNotes+"\n"+listOfNotes.get(i);
-                }
-                saveToTextFile.save("ASNotes", allNotes, getApplicationContext());
+                //Case multiple files
+                if(!sp.getBoolean("singleFile", false)){
+                    for(int i=0;i<listOfNotes.size();i++){
+                        String filetitle="";
+                        filetitle=listOfNotes.get(i);
 
+                        if(filetitle.length()<=8){
+                            filetitle=filetitle.substring(0,filetitle.length()-1);
+                            filetitle="_"+filetitle;
+                        }
+                        if(filetitle.length()>8){
+                            filetitle=filetitle.substring(0,7);
+                            filetitle="_"+filetitle;
+                        }
+                        saveToTextFile.save("ASNotes"+Integer.toString(i)+filetitle, listOfNotes.get(i), getApplicationContext());
+                    }
+                }
+                //Case single file
+                else{
+                    String allNotes="";
+                    for(int i=0;i<listOfNotes.size();i++){
+                        allNotes=allNotes+"\n"+listOfNotes.get(i);
+                    }
+                    saveToTextFile.save("ASNotes", allNotes, getApplicationContext());
+                }
+
+                return false;
+            }
+        });
+
+        MenuItem settingsItem=menu.findItem(R.id.item_settings);
+        settingsItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(intent);
                 return false;
             }
         });
