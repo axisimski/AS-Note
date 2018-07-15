@@ -2,6 +2,9 @@ package com.example.axisimski.note2as;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +19,7 @@ public class NoteActivity extends AppCompatActivity {
     private SaveList saveList=new SaveList();
     private LoadList loadList=new LoadList();
     private ArrayList<String> listOfNotes=new ArrayList<>();
+    private SaveToTextFile saveToTextFile=new SaveToTextFile();
     private int pos=-1;
 
     @Override
@@ -71,5 +75,43 @@ public class NoteActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.settings_menu, menu);
+
+        MenuItem save=menu.findItem(R.id.item_save);
+        save.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                saveNote(pos);
+                return false;
+            }
+        });
+
+        MenuItem save_to_text=menu.findItem(R.id.item_save_to_file);
+        save_to_text.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                String filetitle="";
+                filetitle=listOfNotes.get(pos);
+
+                if(filetitle.length()<=8){
+                    filetitle=filetitle.substring(0,filetitle.length()-1);
+                    filetitle="_"+filetitle;
+                }
+                if(filetitle.length()>8){
+                    filetitle=filetitle.substring(0,7);
+                    filetitle="_"+filetitle;
+                }
+
+                saveToTextFile.save(filetitle, listOfNotes.get(pos),getApplicationContext());
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
 
 }//end class{}
