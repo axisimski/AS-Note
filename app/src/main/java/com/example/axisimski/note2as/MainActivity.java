@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
                     listOfNotes.remove(deletePos);
                     saveList.saveList(getApplicationContext(), listOfNotes);
                     adapter.notifyDataSetChanged();
+                    deletePos=-999;
                 }
                 return false;
             }

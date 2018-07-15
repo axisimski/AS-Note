@@ -35,11 +35,6 @@ public class NoteActivity extends AppCompatActivity {
 
         if(pos!=-1) {
             input_edt.setText(listOfNotes.get(pos));
-            userInput(pos);
-        }
-
-        if(pos==-1){
-            userInput(-1);
         }
 
 
@@ -70,6 +65,7 @@ public class NoteActivity extends AppCompatActivity {
     }//end userInput()
 
     public void onBackPressed(){
+        saveNote(pos);
         Toast.makeText(getApplicationContext(), getResources().getString(R.string.saved), Toast.LENGTH_SHORT).show();
         saveList.saveList(getApplicationContext(), listOfNotes);
         super.onBackPressed();
@@ -84,7 +80,7 @@ public class NoteActivity extends AppCompatActivity {
         save.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                saveNote(pos);
+                onBackPressed();
                 return false;
             }
         });
