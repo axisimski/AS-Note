@@ -4,4 +4,6 @@
     <string name="save">Save</string>
     <string name="saved">Saved</string>
     <string name="save_to_text">Save to text file</string>
- </resources>
+    <string name="to_single_file">Save to single file</string>
+    <string name="to_multiple_files">Save to multiple files</string>
+</resources>
