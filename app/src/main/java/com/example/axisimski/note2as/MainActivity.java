@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> listOfNotes=new ArrayList<String>();
     private ArrayAdapter<String> adapter;
     private EditText input;
+    private SaveList saveList=new SaveList();
+    private LoadList loadList=new LoadList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

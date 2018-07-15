@@ -9,8 +9,8 @@ import java.util.List;
 
 public class SaveList {
 
+    /*Saves the list in shared preferences*/
     public void saveList(Context context, List list){
-
         SharedPreferences sharedPreferences=context.getApplicationContext().
                 getSharedPreferences("LIST", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
