@@ -10,6 +10,7 @@ import java.util.List;
 
 public class LoadList {
 
+    @SuppressWarnings("unchecked")
     public ArrayList<String> loadList(Context context){
 
         ArrayList<String> list= new ArrayList<>();

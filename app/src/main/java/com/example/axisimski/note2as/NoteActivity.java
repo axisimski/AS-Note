@@ -2,8 +2,10 @@ package com.example.axisimski.note2as;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,10 +26,47 @@ public class NoteActivity extends AppCompatActivity {
         input_edt=findViewById(R.id.edt_input);
 
         listOfNotes=loadList.loadList(getApplicationContext());
-        int pos=getIntent().getIntExtra("Position", 0);
-        input_edt.setText(listOfNotes.get(pos));
+        int pos=getIntent().getIntExtra("Position", -1);
+
+        if(pos!=-1) {
+            input_edt.setText(listOfNotes.get(pos));
+            userInput(pos);
+        }
+
+        if(pos==-1){
+            userInput(-1);
+        }
+
 
     }//end onCreate();
+
+
+    private void saveNote(int pos){
+
+        if(pos==-1){
+           // listOfNotes.add(input_edt.getText().toString());
+            listOfNotes.add(input_edt.getText().toString());
+            saveList.saveList(getApplicationContext(), listOfNotes);
+            Toast.makeText(getApplicationContext(), input_edt.getText().toString(), Toast.LENGTH_SHORT).show();
+        }
+        else {
+            listOfNotes.set(pos, input_edt.getText().toString());
+            saveList.saveList(getApplicationContext(), listOfNotes);
+        }
+
+    }
+
+    private void userInput(final int pos){
+
+        save_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveNote(pos);
+            }
+        });
+    }
+
+
 
 
 }//end class{}

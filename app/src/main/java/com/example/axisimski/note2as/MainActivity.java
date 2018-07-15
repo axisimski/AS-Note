@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,6 +63,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    public void onRestart(){
+
+        listOfNotes=loadList.loadList(getApplicationContext());
+        adapter=new ArrayAdapter<>(this,
+                android.R.layout.simple_list_item_1, listOfNotes);
+        noteLV.setAdapter(adapter);
+        super.onRestart();
+    }
     public boolean onCreateOptionsMenu(Menu menu){
 
         MenuInflater inflater = getMenuInflater();
