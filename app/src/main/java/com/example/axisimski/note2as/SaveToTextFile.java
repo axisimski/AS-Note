@@ -13,15 +13,21 @@ public class SaveToTextFile {
 
     public void save(String filename, String content, Context context){
 
-        String fileName = filename+".txt";
+        filename = filename+".txt";
 
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+        File Directory = new File(Environment.getExternalStorageDirectory().
+                getAbsolutePath()+"/ASNotes/");
+
+        Directory.mkdirs();
+
+        File file = new File(Directory
                 , filename);
         try{
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(content.getBytes());
             fos.close();
-            Toast.makeText(context, "Saved Corpus", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getResources().getString(R.string.saved), Toast.LENGTH_SHORT).show();
+
         }catch (FileNotFoundException e){
             Toast.makeText(context, "File not found", Toast.LENGTH_SHORT).show();
 

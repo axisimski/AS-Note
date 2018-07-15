@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         userInput();
 
-
     }//end onCreate()
 
 
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 for(int i=0;i<listOfNotes.size();i++){
                     allNotes=allNotes+"\n"+listOfNotes.get(i);
                 }
-                saveToTextFile.save("testtest", allNotes, getApplicationContext());
+                saveToTextFile.save("ASNotes", allNotes, getApplicationContext());
 
                 return false;
             }
