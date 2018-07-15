@@ -1,0 +1,32 @@
+package com.example.axisimski.note2as;
+
+import android.content.Context;
+import android.os.Environment;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class SaveToTextFile {
+
+    private void saveCorpus(String filename, String content, Context context){
+
+        String fileName = filename+".txt";
+
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath()
+                , filename);
+        try{
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(content.getBytes());
+            fos.close();
+            Toast.makeText(context, "Saved Corpus", Toast.LENGTH_SHORT).show();
+        }catch (FileNotFoundException e){
+            Toast.makeText(context, "File not found", Toast.LENGTH_SHORT).show();
+
+        }catch (IOException e){
+            Toast.makeText(context, "Error~!", Toast.LENGTH_SHORT).show();
+        }
+    }
+}

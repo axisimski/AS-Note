@@ -15,7 +15,8 @@ public class NoteActivity extends AppCompatActivity {
     private EditText input_edt;
     private SaveList saveList=new SaveList();
     private LoadList loadList=new LoadList();
-    ArrayList<String> listOfNotes=new ArrayList<String>();
+    private ArrayList<String> listOfNotes=new ArrayList<>();
+    private int pos=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class NoteActivity extends AppCompatActivity {
         input_edt=findViewById(R.id.edt_input);
 
         listOfNotes=loadList.loadList(getApplicationContext());
-        int pos=getIntent().getIntExtra("Position", -1);
+        pos=getIntent().getIntExtra("Position", -1);
 
         if(pos!=-1) {
             input_edt.setText(listOfNotes.get(pos));
@@ -40,21 +41,19 @@ public class NoteActivity extends AppCompatActivity {
 
     }//end onCreate();
 
-
     private void saveNote(int pos){
 
-        if(pos==-1){
-           // listOfNotes.add(input_edt.getText().toString());
+        if(pos==-1) {
             listOfNotes.add(input_edt.getText().toString());
             saveList.saveList(getApplicationContext(), listOfNotes);
-            Toast.makeText(getApplicationContext(), input_edt.getText().toString(), Toast.LENGTH_SHORT).show();
-        }
-        else {
+            pos = listOfNotes.size();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.saved), Toast.LENGTH_SHORT).show();
+        }else{
             listOfNotes.set(pos, input_edt.getText().toString());
             saveList.saveList(getApplicationContext(), listOfNotes);
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.saved), Toast.LENGTH_SHORT).show();
         }
-
-    }
+    }//end saveNote();
 
     private void userInput(final int pos){
 
@@ -64,7 +63,7 @@ public class NoteActivity extends AppCompatActivity {
                 saveNote(pos);
             }
         });
-    }
+    }//end userInput()
 
 
 
