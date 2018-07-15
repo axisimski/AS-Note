@@ -8,13 +8,22 @@
     tools:context=".NoteActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="43dp"
-        android:text="Button"
+        android:text="@string/save"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="222dp" />
+
+    <EditText
+        android:id="@+id/edt_input"
+        android:layout_width="match_parent"
+        android:layout_height="371dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:ems="10"
+        android:inputType="textPersonName" />
 </RelativeLayout>

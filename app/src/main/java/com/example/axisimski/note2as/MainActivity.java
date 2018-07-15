@@ -12,13 +12,17 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView noteLV;
-    ArrayList<String> listOfNotes=new ArrayList<String>();
-    EditText input;
+    private ListView noteLV;
+    private ArrayList<String> listOfNotes=new ArrayList<String>();
+    private ArrayAdapter<String> adapter;
+    private EditText input;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +32,13 @@ public class MainActivity extends AppCompatActivity {
         noteLV=findViewById(R.id.note_lv);
         input=findViewById(R.id.editText);
 
-        listOfNotes.add("Hello");
+       /* SimpleDateFormat formatter = new SimpleDateFormat("dd/MM", Locale.getDefault());
+        Date date = new Date();*/
+
+       // listOfNotes.add(formatter.format(date)+"Hello");
         listOfNotes.add("World");
 
-        final ArrayAdapter<String> adapter=new ArrayAdapter<>(this,
+        adapter=new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, listOfNotes);
 
         noteLV.setAdapter(adapter);
@@ -40,9 +47,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                listOfNotes.add(input.getText().toString());
-
-                adapter.notifyDataSetChanged();
                 Intent intent = new Intent(MainActivity.this, NoteActivity.class);
                 startActivity(intent);
             }
@@ -57,10 +61,16 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
-        MenuItem addNote=findViewById(R.id.item_add);
+        MenuItem addNote=menu.findItem(R.id.item_add);
         addNote.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+
+                listOfNotes.add(input.getText().toString());
+                adapter.notifyDataSetChanged();
+                Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                startActivity(intent);
+
                 return false;
             }
         });
