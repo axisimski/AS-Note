@@ -3,4 +3,5 @@
     <string name="add_note">Add note</string>
     <string name="save">Save</string>
     <string name="saved">Saved</string>
+    <string name="save_to_text">Save to text file</string>
  </resources>

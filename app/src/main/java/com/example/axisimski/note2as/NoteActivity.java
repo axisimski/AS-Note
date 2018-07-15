@@ -65,7 +65,11 @@ public class NoteActivity extends AppCompatActivity {
         });
     }//end userInput()
 
-
+    public void onBackPressed(){
+        Toast.makeText(getApplicationContext(), getResources().getString(R.string.saved), Toast.LENGTH_SHORT).show();
+        saveList.saveList(getApplicationContext(), listOfNotes);
+        super.onBackPressed();
+    }
 
 
 }//end class{}

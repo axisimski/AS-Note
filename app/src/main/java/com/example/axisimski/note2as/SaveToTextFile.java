@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class SaveToTextFile {
 
-    private void saveCorpus(String filename, String content, Context context){
+    public void save(String filename, String content, Context context){
 
         String fileName = filename+".txt";
 

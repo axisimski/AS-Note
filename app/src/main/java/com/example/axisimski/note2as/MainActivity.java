@@ -23,41 +23,26 @@ public class MainActivity extends AppCompatActivity {
     private ListView noteLV;
     private ArrayList<String> listOfNotes=new ArrayList<String>();
     private ArrayAdapter<String> adapter;
-    private EditText input;
     private SaveList saveList=new SaveList();
     private LoadList loadList=new LoadList();
+    private CheckPermissions checkPermissions=new CheckPermissions();
+    private SaveToTextFile saveToTextFile=new SaveToTextFile();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        checkPermissions.checkPermissions(getApplicationContext(), MainActivity.this);
 
+        listOfNotes=loadList.loadList(getApplicationContext());
         noteLV=findViewById(R.id.note_lv);
-        input=findViewById(R.id.editText);
-
-       /* SimpleDateFormat formatter = new SimpleDateFormat("dd/MM", Locale.getDefault());
-        Date date = new Date();*/
-
-       // listOfNotes.add(formatter.format(date)+"Hello");
-        listOfNotes.add("World");
-
         adapter=new ArrayAdapter<>(this,
                 R.layout.single_line_lv, listOfNotes);
-
         noteLV.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
-        noteLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        userInput();
 
-                Intent intent = new Intent(MainActivity.this, NoteActivity.class);
-                intent.putExtra("Position", position);
-                startActivity(intent);
-            }
-        });
-
-        saveList.saveList(getApplicationContext(), listOfNotes);
-        listOfNotes=loadList.loadList(getApplicationContext());
 
     }//end onCreate()
 
@@ -66,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRestart(){
 
         listOfNotes=loadList.loadList(getApplicationContext());
+        saveList.saveList(getApplicationContext(), listOfNotes);
         adapter=new ArrayAdapter<>(this,
                 R.layout.single_line_lv, listOfNotes);
         noteLV.setAdapter(adapter);
@@ -81,10 +67,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                listOfNotes.add(input.getText().toString());
-                adapter.notifyDataSetChanged();
                 Intent intent = new Intent(MainActivity.this, NoteActivity.class);
                 startActivity(intent);
+                return false;
+            }
+        });
+
+        MenuItem saveToText=menu.findItem(R.id.item_save);
+        saveToText.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                String allNotes="";
+                for(int i=0;i<listOfNotes.size();i++){
+                    allNotes=allNotes+"\n"+listOfNotes.get(i);
+                }
+                saveToTextFile.save("testtest", allNotes, getApplicationContext());
 
                 return false;
             }
@@ -94,6 +92,16 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onCreateOptionsMenu(menu);
     }
+    private void userInput(){
+        noteLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+         @Override
+          public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+               Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+               intent.putExtra("Position", position);
+               startActivity(intent);
+             }
+        });
+    }
 
 }
