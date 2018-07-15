@@ -23,8 +23,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int deletePos;
-    private Button delete_btn;
+    private int deletePos=-999;
     private ListView noteLV;
     private ArrayList<String> listOfNotes=new ArrayList<String>();
     private ArrayAdapter<String> adapter;
@@ -41,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         checkPermissions.checkPermissions(getApplicationContext(), MainActivity.this);
 
-        delete_btn=findViewById(R.id.delete_btn);
-        delete_btn.setVisibility(View.GONE);
         sp=getSharedPreferences("Settings", Context.MODE_PRIVATE);
         listOfNotes=loadList.loadList(getApplicationContext());
         noteLV=findViewById(R.id.note_lv);
@@ -57,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onRestart(){
-        delete_btn.setVisibility(View.GONE);
         listOfNotes=loadList.loadList(getApplicationContext());
         saveList.saveList(getApplicationContext(), listOfNotes);
         adapter=new ArrayAdapter<>(this,
@@ -126,6 +122,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        MenuItem deleteItem=menu.findItem(R.id.item_delete);
+        deleteItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(deletePos!=-999){
+                    listOfNotes.remove(deletePos);
+                    saveList.saveList(getApplicationContext(), listOfNotes);
+                    adapter.notifyDataSetChanged();
+                }
+                return false;
+            }
+        });
+
 
 
         return super.onCreateOptionsMenu(menu);
@@ -145,21 +154,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 view.setSelected(true);
-                delete_btn.setVisibility(View.VISIBLE);
                 deletePos=position;
                 return false;
             }
         });
 
-        delete_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listOfNotes.remove(deletePos);
-                saveList.saveList(getApplicationContext(), listOfNotes);
-                delete_btn.setVisibility(View.GONE);
-                adapter.notifyDataSetChanged();
-            }
-        });
     }
 
 }
