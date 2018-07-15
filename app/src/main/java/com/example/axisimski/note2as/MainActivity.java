@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         listOfNotes.add("World");
 
         adapter=new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, listOfNotes);
+                R.layout.single_line_lv, listOfNotes);
 
         noteLV.setAdapter(adapter);
 
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         listOfNotes=loadList.loadList(getApplicationContext());
         adapter=new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, listOfNotes);
+                R.layout.single_line_lv, listOfNotes);
         noteLV.setAdapter(adapter);
         super.onRestart();
     }
