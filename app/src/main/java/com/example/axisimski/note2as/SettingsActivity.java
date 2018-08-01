@@ -70,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
             single_rb.setChecked(true);
         }
         if(!sp.getBoolean("singleFile",false)){
-            single_rb.setChecked(false);
+            multi_rb.setChecked(true);
         }
 
 

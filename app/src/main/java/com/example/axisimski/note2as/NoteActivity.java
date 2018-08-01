@@ -50,9 +50,9 @@ public class NoteActivity extends AppCompatActivity {
     private void saveNote(int pos){
 
         @SuppressLint
-                ("SimpleDateFormat") SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                ("SimpleDateFormat") SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy HH:mm");
         Date date = new Date();
-        String dateStr=" "+formatter.format(date)+" ";
+        String dateStr=" ("+formatter.format(date)+") ";
 
         if(!sp.getBoolean("addDate",false)){
             dateStr="";
