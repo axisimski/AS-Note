@@ -15,17 +15,18 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class NoteActivity extends AppCompatActivity {
 
-    private Button save_btn;
     private EditText input_edt;
     private SaveList saveList=new SaveList();
     private LoadList loadList=new LoadList();
     private ArrayList<String> listOfNotes=new ArrayList<>();
     private SaveToTextFile saveToTextFile=new SaveToTextFile();
-    SharedPreferences sp;
+    private String note;
+    private SharedPreferences sp;
     private int pos=-1;
 
     @Override
@@ -33,15 +34,14 @@ public class NoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
-        save_btn=findViewById(R.id.btn_save);
         input_edt=findViewById(R.id.edt_input);
         sp=getSharedPreferences("Settings", Context.MODE_PRIVATE);
-
         listOfNotes=loadList.loadList(getApplicationContext());
         pos=getIntent().getIntExtra("Position", -1);
 
         if(pos!=-1) {
             input_edt.setText(listOfNotes.get(pos));
+            note=listOfNotes.get(pos);
         }
 
 
@@ -54,7 +54,14 @@ public class NoteActivity extends AppCompatActivity {
         Date date = new Date();
         String dateStr=" ("+formatter.format(date)+") ";
 
+        //Check if user wants date added after editing note
         if(!sp.getBoolean("addDate",false)){
+            dateStr="";
+        }
+
+        //Check if user changed something or simply viewed the note by comparing
+        //the original string with the current one.
+        if(input_edt.getText().toString().equals(note)){
             dateStr="";
         }
 
@@ -70,15 +77,6 @@ public class NoteActivity extends AppCompatActivity {
         }
     }//end saveNote();
 
-    private void userInput(final int pos){
-
-        save_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveNote(pos);
-            }
-        });
-    }//end userInput()
 
     public void onBackPressed(){
         saveNote(pos);

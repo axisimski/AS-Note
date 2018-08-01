@@ -6,6 +6,7 @@ import android.widget.BaseAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LoadList {
@@ -26,7 +27,6 @@ public class LoadList {
             list.clear();
             list.addAll(tempName);
         }
-
-        return list;
+         return list;
     }
 }
