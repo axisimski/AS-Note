@@ -10,10 +10,10 @@
     <ListView
         android:id="@+id/note_lv"
         android:layout_width="match_parent"
-        android:layout_height="642dp"
+        android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="0dp"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
