@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class NoteActivity extends AppCompatActivity {
 
@@ -42,13 +44,16 @@ public class NoteActivity extends AppCompatActivity {
 
     private void saveNote(int pos){
 
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String dateStr=" "+formatter.format(date)+" ";
         if(pos==-1) {
-            listOfNotes.add(input_edt.getText().toString());
+            listOfNotes.add(input_edt.getText().toString()+dateStr);
             saveList.saveList(getApplicationContext(), listOfNotes);
             pos = listOfNotes.size();
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.saved), Toast.LENGTH_SHORT).show();
         }else{
-            listOfNotes.set(pos, input_edt.getText().toString());
+            listOfNotes.set(pos, input_edt.getText().toString()+dateStr);
             saveList.saveList(getApplicationContext(), listOfNotes);
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.saved), Toast.LENGTH_SHORT).show();
         }
