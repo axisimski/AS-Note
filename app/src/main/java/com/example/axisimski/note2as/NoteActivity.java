@@ -1,5 +1,8 @@
 package com.example.axisimski.note2as;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,6 +25,7 @@ public class NoteActivity extends AppCompatActivity {
     private LoadList loadList=new LoadList();
     private ArrayList<String> listOfNotes=new ArrayList<>();
     private SaveToTextFile saveToTextFile=new SaveToTextFile();
+    SharedPreferences sp;
     private int pos=-1;
 
     @Override
@@ -31,6 +35,7 @@ public class NoteActivity extends AppCompatActivity {
 
         save_btn=findViewById(R.id.btn_save);
         input_edt=findViewById(R.id.edt_input);
+        sp=getSharedPreferences("Settings", Context.MODE_PRIVATE);
 
         listOfNotes=loadList.loadList(getApplicationContext());
         pos=getIntent().getIntExtra("Position", -1);
@@ -44,9 +49,15 @@ public class NoteActivity extends AppCompatActivity {
 
     private void saveNote(int pos){
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        @SuppressLint
+                ("SimpleDateFormat") SimpleDateFormat formatter =  new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         String dateStr=" "+formatter.format(date)+" ";
+
+        if(!sp.getBoolean("addDate",false)){
+            dateStr="";
+        }
+
         if(pos==-1) {
             listOfNotes.add(input_edt.getText().toString()+dateStr);
             saveList.saveList(getApplicationContext(), listOfNotes);
